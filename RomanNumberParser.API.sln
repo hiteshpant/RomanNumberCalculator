@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B8E8A21C-0B9E-4C4F-A827-CB42D7B7F99D}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{22A8DA46-96D2-4E72-BAEA-91D6380AF1BA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{57216132-53D9-42BF-B417-97831C088B62}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{F79E0F7A-DA02-4427-B7BB-3E770B2DEF7A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{4877E41D-2647-4A08-ABFA-B87A97040C1D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RomanNumberParser.API", "src\Service\RomanNumberParser.API\RomanNumberParser.API.csproj", "{605DD2C0-507C-4168-8A70-5141CFD2C08F}"
 EndProject
@@ -11,18 +19,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RomanParser.Core", "src\Cor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RomanParser.Core.Contract", "src\Core\RomanParser.Core.Contract\RomanParser.Core.Contract.csproj", "{DD6DCD78-0EDC-47CB-A94B-AE6D0652A594}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B8E8A21C-0B9E-4C4F-A827-CB42D7B7F99D}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{4877E41D-2647-4A08-ABFA-B87A97040C1D}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RomanNumberParser.Core.Test", "src\Test\RomanNumber.Parser.Core.Test\RomanNumberParser.Core.Test.csproj", "{93CBF348-A8AB-41F1-B608-D07A966AA454}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{F79E0F7A-DA02-4427-B7BB-3E770B2DEF7A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RomanNumberParser.WebMVC", "src\Web\RomanNumberParser.WebMVC\RomanNumberParser.WebMVC.csproj", "{E62AB6DB-B7DD-4CA9-8597-FB8F4B1B34DE}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{57216132-53D9-42BF-B417-97831C088B62}"
-EndProject
+
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
