@@ -1,0 +1,34 @@
+﻿@page
+@model IndexModel
+
+@{
+    ViewData["Title"] = "Home page";
+}
+
+    <div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <label>Input Mode</label>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>           
+             @Html.DropDownList("CalculationMode", Model.InputModel?.Modes);<br>
+             <div class="form-group">
+                <label asp-for="InputModel.Input1" class="control-label"></label>
+                <input asp-for="InputModel.Input1" class="form-control" />
+                <span asp-validation-for="InputModel.Input1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InputModel.Input2" class="control-label"></label>
+                <input  asp-for="InputModel.Input2" class="form-control" />
+                <span asp-validation-for="InputModel.Input2"  class="text-danger"></span>
+            </div>  
+             <div class="form-group">
+                   <label asp-for="Result"  class="control-label"></label>&nbsp
+                   <label >@Model.Result</label>
+                </div><br />
+            <div class="form-group">
+                <input type="submit" value="Calculate"value="Calculate" asp-page-handler="Calculate" />
+            </div>
+        </form>
+    </div>
+</div>
+
