@@ -1,10 +1,9 @@
-﻿using System;
-using RomanParser.Core.Contract;
+﻿using RomanParser.Core.Contract;
 using System.Text;
 
 namespace RomanParser.Core
 {
-    public class DecimalToRomanParser : IExpression
+    public class DecimalToRomanExpressionInterpreter : IInterpreter
     {
         private static Tuple<int, string>[] romanCharacterMap =
         {
@@ -23,7 +22,13 @@ namespace RomanParser.Core
            new Tuple<int, string>( 1,"I") ,
         };
 
-        public string Interpret(string input)
+        public async Task<string> Interpret(string input1)
+        {            
+            return await Task.Factory.StartNew(() => ParseDeimalToRoman(input1));
+
+        }
+
+        private string ParseDeimalToRoman(string input)
         {
             StringBuilder result = new StringBuilder();
             if (Int32.TryParse(input.ToUpper().Trim(), out int inputVal))

@@ -18,6 +18,9 @@ namespace RomanNumberParser.WebMVC.Pages
         public string? Input2 { get; set; }
 
         [BindProperty]
+        public int SelectedValue { get; set; }
+
+        [BindProperty]
         public List<SelectListItem> Modes
         {
             get;

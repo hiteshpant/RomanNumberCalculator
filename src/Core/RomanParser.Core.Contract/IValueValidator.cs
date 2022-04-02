@@ -2,6 +2,6 @@
 {
     public interface IValueValidator
     {
-        bool IsValid(string input);
+        bool IsValid(string input);        
     }   
 }

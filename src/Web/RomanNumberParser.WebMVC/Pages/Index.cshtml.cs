@@ -10,7 +10,6 @@ namespace RomanNumberParser.WebMVC.Pages
         private readonly ILogger<IndexModel> _logger;
         private readonly IConfiguration _Configuration;
         private readonly string _ApiUrl;
-        private readonly IInputModeValidator _InputModeValidator;
 
         [BindProperty]
         public int Number { get; set; }
@@ -20,11 +19,10 @@ namespace RomanNumberParser.WebMVC.Pages
 
         public string Result { get; set; } = "Give a Try";
 
-        public IndexModel(ILogger<IndexModel> logger, IConfiguration configuration, IInputModeValidator inputModeValidator)
+        public IndexModel(ILogger<IndexModel> logger, IConfiguration configuration)
         {
             _Configuration = configuration;
             _logger = logger;
-            _InputModeValidator = inputModeValidator;
             _ApiUrl = _Configuration.GetSection("APIAddress").Value;
         }
 
@@ -37,16 +35,16 @@ namespace RomanNumberParser.WebMVC.Pages
         {
             try
             {
+                //InputModel.Modes.Where()
                 using (var client = new HttpClient())
                 {
-                    Int32.TryParse(Request.Form["CalculationMode"].ToString(), out int selectedMode);
+                    //Int32.TryParse(Request.Form["CalculationMode"].ToString(), out int selectedMode);
 
-                    if (IsInputValidforMode(selectedMode, out string matchResult) && ModelState.IsValid)
+                    if (ModelState.IsValid)
                     {
-
                         var content = new StringContent(JsonSerializer.Serialize(InputModel), System.Text.Encoding.UTF8, "application/json");
                         HttpResponseMessage apiResult = null;
-                        if (selectedMode == (int)DataInputMode.Roman)
+                        if (InputModel.SelectedValue == (int)DataInputMode.Roman)
                         {
 
                             apiResult = await client.PostAsync(_ApiUrl, content);
@@ -59,42 +57,13 @@ namespace RomanNumberParser.WebMVC.Pages
                         apiResult.EnsureSuccessStatusCode();
                         Result = await apiResult.Content.ReadAsStringAsync();                      
                        
-                    }
-                    else
-                    {
-                        Result = matchResult;
-                    }
+                    }                   
                 }
             }
             catch (Exception ex)
             {
                 Result = ex.Message;
             }
-        }
-
-        private bool IsInputValidforMode(int selectedMode, out string result)
-        {
-            bool isValid = true;
-            if (selectedMode == (int)DataInputMode.Roman)
-            {
-                if (!_InputModeValidator.IsRomanInputValid(InputModel?.Input1, InputModel?.Input2, out result))
-                {
-                    Result = result;
-                    isValid = false;
-                }
-
-                //Validate input for Roman Data
-            }
-            else
-            {
-                if (!_InputModeValidator.IsNumericInputValid(InputModel?.Input1, InputModel?.Input2, out result))
-                {
-                    Result = result;
-                    isValid = false;
-                }
-            }
-
-            return isValid;
         }       
     }
 }

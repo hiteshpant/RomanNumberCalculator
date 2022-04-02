@@ -188,6 +188,7 @@ namespace RomanNumberParser.Core.Test
             var parser = new RomanExpressionParser(new List<IValueValidator>() { valueValidator });
             var result = parser.Interpret(input);
             valueValidator.Received().IsValid(input);
+
             //Assert
             Assert.That(result, Is.EqualTo("726"));
         }

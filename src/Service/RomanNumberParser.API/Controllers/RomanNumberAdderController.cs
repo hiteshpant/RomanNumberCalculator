@@ -11,15 +11,17 @@ namespace RomanNumberParser.API.Controllers
     public class RomanNumberAdderController : ControllerBase
     {
         private readonly ILogger<RomanNumberAdderController> _Logger;
-        private readonly ISumCalculator _SumCalculator;
-        private readonly IExpression _Expression;
+        private readonly IRomanNumberSumCalculator _SumCalculator;
+        private readonly IInterpreter _Interpreter;
+        private readonly IEnumerable<IValueValidator> _ValueValidator;
 
-        public RomanNumberAdderController(ILogger<RomanNumberAdderController> logger, ISumCalculator sumCalculator,
-                                           IExpression expression)
+        public RomanNumberAdderController(ILogger<RomanNumberAdderController> logger, IRomanNumberSumCalculator sumCalculator
+                                         , IInterpreter interpreter, IEnumerable<IValueValidator> valueValidator)
         {
             _Logger = logger;
             _SumCalculator = sumCalculator;
-            _Expression = expression;
+            _Interpreter = interpreter;
+            _ValueValidator = valueValidator;
         }
 
 
@@ -37,7 +39,7 @@ namespace RomanNumberParser.API.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    return await _SumCalculator.GetSum(model.Input1, model.Input2);
+                    return await _SumCalculator.CalculateSum(model.Input1, model.Input2);
                 }
                 else
                 {
@@ -75,23 +77,15 @@ namespace RomanNumberParser.API.Controllers
                 {
                     string numericSum = String.Empty;
                     string romanSum = String.Empty;
-                    await Task.Run(() =>
-                    {
-                        var sum = AddNumbers(model.Input1, model.Input2);
-                        var expression = new DecimalToRomanParser();
-                        numericSum = $"{model.Input1} + {model.Input2} = {sum}";
-                        var validator = new MaxSumValidaor();
-                        if (validator.IsValid(sum))
-                        {
-                            romanSum = $"{expression.Interpret(model?.Input1)} + {expression.Interpret(model?.Input2)} = {expression.Interpret(sum)}";
-                        }
-                        else
-                        {
-                            romanSum = "Right now for Roman Number System We can only interpret value till 3999";
-                        }
-                    });
+                    var numericvaidaor = _ValueValidator.FirstOrDefault(x => x.GetType()
+                                                        .Name == "DecimalValueValidator");
+                    numericvaidaor?.IsValid(model.Input1);
+                    numericvaidaor?.IsValid(model.Input2);
 
-                    return numericSum  + ";  "+ romanSum;
+                    var romanNumber1 = await _Interpreter.Interpret(model.Input1);
+                    var romanNumber2 = await _Interpreter.Interpret(model.Input2);
+                    return await _SumCalculator.CalculateSum(romanNumber1, romanNumber2);
+
                 }
                 else
                 {
@@ -104,14 +98,13 @@ namespace RomanNumberParser.API.Controllers
                 _Logger.LogError(ex.Message);
                 return new ActionResult<string>(ex.Message);
             }
-        }
 
-        private string AddNumbers(string input1, string input2)
-        {
-            int.TryParse(input1, out int num1);
-            int.TryParse(input2, out int num2);
-            return (num1 + num2).ToString();
-
+            catch (InvalidDataException ex)
+            {
+                //Its my reposibility to tell the user about the problem
+                _Logger.LogError(ex.Message);
+                return new ActionResult<string>(ex.Message);
+            }
         }
     }
 }

@@ -9,8 +9,11 @@
     <div class="col-md-4">
         <form method="post">
             <label>Input Mode</label>
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>           
-             @Html.DropDownList("CalculationMode", Model.InputModel?.Modes);<br>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>  
+            <label>Select Mode</label>
+             @Html.DropDownListFor(s=>s.InputModel.SelectedValue,Model.InputModel.Modes)
+             @*<select asp-for="Number" name="ViewMode" asp-items="Model.InputModel?.Modes"></select>*@
+             @*@Html.DropDownList("CalculationMode", Model.InputModel?.Modes);<br>*@
              <div class="form-group">
                 <label asp-for="InputModel.Input1" class="control-label"></label>
                 <input asp-for="InputModel.Input1" class="form-control" />
