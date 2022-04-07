@@ -13,7 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IValueValidator, RomanValueValidator>();
 builder.Services.AddScoped<IValueValidator, DecimalValueValidator>();
 builder.Services.AddScoped<IRomanNumberSumCalculator, RomanNumberSumCalculator>();
-builder.Services.AddScoped<IInterpreter, DecimalToRomanExpressionInterpreter>();
+builder.Services.AddScoped<IInterpreter, DecimalToRomanInterpreter>();
 
 
 

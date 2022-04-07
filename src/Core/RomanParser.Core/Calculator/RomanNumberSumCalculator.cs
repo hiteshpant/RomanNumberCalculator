@@ -12,9 +12,9 @@ namespace RomanParser.Core.Parser
     {
         private List<string> PriorityMap = new List<string>(15)
                                                 { "M", "D",  "C", "L", "X","V","III","II","I" };
-        private readonly IValueValidator _ValueValidators;
+        private readonly IValueValidator? _ValueValidators;
 
-        public RomanNumberSumCalculator(IEnumerable<IValueValidator> valueValidator)
+        public RomanNumberSumCalculator(IEnumerable<IValueValidator?> valueValidator)
         {
             _ValueValidators = valueValidator?.FirstOrDefault(x => x.GetType().Name == "RomanValueValidator");
             if (_ValueValidators == null)
@@ -23,13 +23,13 @@ namespace RomanParser.Core.Parser
             }
         }
 
-        private Dictionary<string, string> _NonSubtractiveMap = new Dictionary<string, string>()
+        private readonly Dictionary<string, string> _NonSubtractiveMap = new Dictionary<string, string>()
        {
             { "CM","DCCCC"}, { "CD","CCCC"}, { "XC","LXXXX"}, { "XL","XXXX"}, { "IX","VIIII"},{ "IV","IIII"}
        };
 
 
-        private Dictionary<string, string> _SubtractiveMap = new Dictionary<string, string>()
+        private readonly Dictionary<string, string> _SubtractiveMap = new Dictionary<string, string>()
         {
              { "DCCCC","CM"}, { "CCCC","CD"}, { "LXXXX","XC"}, { "XXXX","XL"}, { "VIIII","IX"},{ "IIII","IV"}
         };
@@ -64,7 +64,7 @@ namespace RomanParser.Core.Parser
             return result;
         }
 
-        public int GetPriority(string input)
+        private int GetPriority(string input)
         {
             return PriorityMap.IndexOf(input);
         }
@@ -109,7 +109,7 @@ namespace RomanParser.Core.Parser
         {
             var nonSubtractive1 = GetNonSubtractiveSequence(new StringBuilder(input1));
             var nonSubtractive2 = GetNonSubtractiveSequence(new StringBuilder(input2));
-            var sortedValue = SortStringAsPerPiority(nonSubtractive1.ToString() + nonSubtractive2.ToString());
+            var sortedValue = SortStringAsPerPriority(nonSubtractive1.ToString() + nonSubtractive2.ToString());
             var sbOutput = new StringBuilder(sortedValue);
             var repeatingString = new StringBuilder();
             var sortedValueLength = sortedValue.Length - 1;
@@ -130,7 +130,7 @@ namespace RomanParser.Core.Parser
                         if (repetationresult != string.Empty)
                         {
                             sbOutput.Replace(repeatingString.ToString(), repetationresult, startIndex, endIndex - startIndex + 1);
-                            sbOutput = new StringBuilder(SortStringAsPerPiority(sbOutput.ToString()));
+                            sbOutput = new StringBuilder(SortStringAsPerPriority(sbOutput.ToString()));
                             endIndex = sbOutput.Length - 1;
                             break;
                         }
@@ -153,7 +153,7 @@ namespace RomanParser.Core.Parser
         }
 
 
-        private string SortStringAsPerPiority(string input)
+        private string SortStringAsPerPriority(string input)
         {
             var sortedCollection = input.OrderBy(x => GetPriority(x.ToString())).Select(x => x.ToString());
             StringBuilder sb = new StringBuilder();
@@ -187,7 +187,7 @@ namespace RomanParser.Core.Parser
         {
             try
             {
-                var isValid = _ValueValidators.IsValid(input1) && _ValueValidators.IsValid(input1);
+                var isValid = _ValueValidators != null && _ValueValidators.IsValid(input1) && _ValueValidators.IsValid(input1);
                 return await Task.Factory.StartNew(() => AddRomanNumber(input1, input2));
             }
             catch (InValidRomanValueException ex)

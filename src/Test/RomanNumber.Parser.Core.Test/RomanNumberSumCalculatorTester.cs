@@ -22,7 +22,7 @@ namespace RomanNumberParser.Core.Test
             var romanValueValidator = new RomanValueValidator();
             romanValueValidator.IsValid(input1);
             romanValueValidator.IsValid(input2);
-            var calculator = new RomanNumberSumCalculator(new List<IValueValidator>() { romanValueValidator });
+            var calculator = new RomanNumberSumCalculator(new List<IValueValidator?>() { romanValueValidator });
 
             //ACT
             var result = await calculator.CalculateSum(input1, input2);
@@ -41,7 +41,7 @@ namespace RomanNumberParser.Core.Test
             var romanValueValidator = new RomanValueValidator();
             romanValueValidator.IsValid(input1);
             romanValueValidator.IsValid(input2);
-            var calculator = new RomanNumberSumCalculator(new List<IValueValidator>() { romanValueValidator });
+            var calculator = new RomanNumberSumCalculator(new List<IValueValidator?>() { romanValueValidator });
 
             //Act
             var result = await calculator.CalculateSum(input1, input2);
@@ -61,7 +61,7 @@ namespace RomanNumberParser.Core.Test
             var romanValueValidator = new RomanValueValidator();
             romanValueValidator.IsValid(input1);
             romanValueValidator.IsValid(input2);
-            var calculator = new RomanNumberSumCalculator(new List<IValueValidator>() { romanValueValidator });
+            var calculator = new RomanNumberSumCalculator(new List<IValueValidator?>() { romanValueValidator });
             //Act
             var result = await calculator.CalculateSum(input1, input2);
 
@@ -78,7 +78,7 @@ namespace RomanNumberParser.Core.Test
             var romanValueValidator = new RomanValueValidator();
             romanValueValidator.IsValid(input1);
             romanValueValidator.IsValid(input2);
-            var calculator = new RomanNumberSumCalculator(new List<IValueValidator>() { romanValueValidator });
+            var calculator = new RomanNumberSumCalculator(new List<IValueValidator?>() { romanValueValidator });
             
             //Act
             var result = await calculator.CalculateSum(input1, input2);
@@ -97,7 +97,7 @@ namespace RomanNumberParser.Core.Test
             var romanValueValidator = new RomanValueValidator();
             romanValueValidator.IsValid(input1);
             romanValueValidator.IsValid(input2);
-            var calculator = new RomanNumberSumCalculator(new List<IValueValidator>() { romanValueValidator });
+            var calculator = new RomanNumberSumCalculator(new List<IValueValidator?>() { romanValueValidator });
 
             //Act
             var result = await calculator.CalculateSum(input1,input2);
@@ -116,7 +116,7 @@ namespace RomanNumberParser.Core.Test
             var romanValueValidator = new RomanValueValidator();
             romanValueValidator.IsValid(input1);
             romanValueValidator.IsValid(input2);
-            var calculator = new RomanNumberSumCalculator(new List<IValueValidator>() { romanValueValidator });
+            var calculator = new RomanNumberSumCalculator(new List<IValueValidator?>() { romanValueValidator });
             //Act
             var result = await calculator.CalculateSum(input1, input2);
 
@@ -132,7 +132,7 @@ namespace RomanNumberParser.Core.Test
             var input2 = "XLVIIIXXXXXX";
            
             var romanValueValidator = new RomanValueValidator();
-            var calculator = new RomanNumberSumCalculator(new List<IValueValidator>() { romanValueValidator });
+            var calculator = new RomanNumberSumCalculator(new List<IValueValidator?>() { romanValueValidator });
 
             //Act
             Assert.That(async () => await calculator.CalculateSum(input1, input2), Throws.InstanceOf<InValidRomanValueException>());

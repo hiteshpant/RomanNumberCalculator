@@ -3,9 +3,9 @@ using System.Text;
 
 namespace RomanParser.Core
 {
-    public class DecimalToRomanExpressionInterpreter : IInterpreter
+    public class DecimalToRomanInterpreter : IInterpreter
     {
-        private static Tuple<int, string>[] romanCharacterMap =
+        private static readonly Tuple<int, string>[] romanCharacterMap =
         {
            new Tuple<int, string>( 1000,"M") ,
            new Tuple<int, string>( 900,"CM") ,

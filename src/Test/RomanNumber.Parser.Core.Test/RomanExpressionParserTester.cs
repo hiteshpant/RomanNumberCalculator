@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using RomanParser.Core;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace RomanNumberParser.Core.Test
 {
@@ -10,187 +11,178 @@ namespace RomanNumberParser.Core.Test
     {
 
         [Test]
-        public void RomanInputAsSixParseTest()
+        public async Task RomanInputAsSixParseTest()
         {
             //Arrange
             var valueValidator = Substitute.For<IValueValidator>();
-            var input = "VI";
+            var input = "6";
             valueValidator.IsValid(input).Returns(true);
 
             // Act 
-            var parser = new RomanExpressionParser(new List<IValueValidator>() { valueValidator });
-            var result = parser.Interpret(input);
-            valueValidator.Received().IsValid(input);
+            var parser = new DecimalToRomanInterpreter();
+            var result = await parser.Interpret(input);
 
             //Assert
-            Assert.That(result, Is.EqualTo("6"));
+            Assert.That(result, Is.EqualTo("VI"));
         }
 
         [Test]
-        public void RomanInputAs1ParseTest()
+        public async Task RomanInputAs1ParseTest()
         {
             //Arrange
             var valueValidator = Substitute.For<IValueValidator>();
-            var input = "I";
+            var input = "1";
             valueValidator.IsValid(input).Returns(true);
 
             // Act 
-            var parser = new RomanExpressionParser(new List<IValueValidator>() { valueValidator });
-            var result = parser.Interpret(input);
-            valueValidator.Received().IsValid(input);
+            var parser = new DecimalToRomanInterpreter();
+            var result = await parser.Interpret(input);
 
             //Assert
-            Assert.That(result, Is.EqualTo("1"));
+            Assert.That(result, Is.EqualTo("I"));
         }
 
         [Test]
-        public void RomanInputAsFiveParseTest()
+        public async Task RomanInputAsFiveParseTest()
         {
             //Arrange
             var valueValidator = Substitute.For<IValueValidator>();
-            var input = "V";
+            var input = "5";
             valueValidator.IsValid(input).Returns(true);
 
             // Act 
-            var parser = new RomanExpressionParser(new List<IValueValidator>() { valueValidator });
-            var result = parser.Interpret(input);
-            valueValidator.Received().IsValid(input);
+            var parser = new DecimalToRomanInterpreter();
+            var result = await parser.Interpret(input);
 
             //Assert
-            Assert.That(result, Is.EqualTo("5"));
+            Assert.That(result, Is.EqualTo("V"));
         }
 
         [Test]
-        public void RomanInputAsTenParseTest()
+        public async Task RomanInputAsTenParseTest()
         {
             //Arrange
             var valueValidator = Substitute.For<IValueValidator>();
-            var input = "X";
+            var input = "10";
             valueValidator.IsValid(input).Returns(true);
 
             // Act 
-            var parser = new RomanExpressionParser(new List<IValueValidator>() { valueValidator });
-            var result = parser.Interpret(input);
-            valueValidator.Received().IsValid(input);
+            var parser = new DecimalToRomanInterpreter();
+            var result = await parser.Interpret(input);
             //Assert
-            Assert.That(result, Is.EqualTo("10"));
+            Assert.That(result, Is.EqualTo("X"));
         }
 
         [Test]
-        public void RomanInputAsFiftyParseTest()
+        public async Task RomanInputAsFiftyParseTest()
         {
             //Arrange
             var valueValidator = Substitute.For<IValueValidator>();
-            var input = "L";
+            var input = "50";
             valueValidator.IsValid(input).Returns(true);
 
             // Act 
-            var parser = new RomanExpressionParser(new List<IValueValidator>() { valueValidator });
-            var result = parser.Interpret(input);
-            valueValidator.Received().IsValid(input);
+            var parser = new DecimalToRomanInterpreter();
+            var result = await parser.Interpret(input);
             //Assert
-            Assert.That(result, Is.EqualTo("50"));
+            Assert.That(result, Is.EqualTo("L"));
         }
 
 
         [Test]
-        public void RomanInputAsHundredParseTest()
+        public async Task RomanInputAsHundredParseTest()
         {
             //Arrange
             var valueValidator = Substitute.For<IValueValidator>();
-            var input = "C";
+            var input = "100";
             valueValidator.IsValid(input).Returns(true);
 
             // Act 
-            var parser = new RomanExpressionParser(new List<IValueValidator>() { valueValidator });
-            var result = parser.Interpret(input);
-            valueValidator.Received().IsValid(input);
+            var parser = new DecimalToRomanInterpreter();
+
+            var result = await parser.Interpret(input);
             //Assert
-            Assert.That(result, Is.EqualTo("100"));
+            Assert.That(result, Is.EqualTo("C"));
         }
 
 
         [Test]
-        public void RomanInputAsFiveHundredParseTest()
+        public async Task RomanInputAsFiveHundredParseTest()
         {
             //Arrange
             var valueValidator = Substitute.For<IValueValidator>();
-            var input = "D";
+            var input = "500";
             valueValidator.IsValid(input).Returns(true);
 
             // Act 
-            var parser = new RomanExpressionParser(new List<IValueValidator>() { valueValidator });
-            var result = parser.Interpret(input);
-            valueValidator.Received().IsValid(input);
+            var parser = new DecimalToRomanInterpreter();
+            var result = await parser.Interpret(input);
             //Assert
-            Assert.That(result, Is.EqualTo("500"));
+            Assert.That(result, Is.EqualTo("D"));
         }
 
 
         [Test]
-        public void RomanInputAsThousandParseTest()
+        public async Task RomanInputAsThousandParseTest()
         {
             //Arrange
             var valueValidator = Substitute.For<IValueValidator>();
-            var input = "M";
+            var input = "1000";
             valueValidator.IsValid(input).Returns(true);
 
             // Act 
-            var parser = new RomanExpressionParser(new List<IValueValidator>() { valueValidator });
-            var result = parser.Interpret(input);
-            valueValidator.Received().IsValid(input);
+            var parser = new DecimalToRomanInterpreter();
+            var result = await parser.Interpret(input);
             //Assert
-            Assert.That(result, Is.EqualTo("1000"));
+            Assert.That(result, Is.EqualTo("M"));
         }
 
         [Test]
-        public void MaxRomanInputTest()
+        public async Task MaxRomanInputTest()
         {
             //Arrange
             var valueValidator = Substitute.For<IValueValidator>();
-            var input = "MMMCMXCIX";
+            var input = "3999";
             valueValidator.IsValid(input).Returns(true);
 
             // Act 
-            var parser = new RomanExpressionParser(new List<IValueValidator>() { valueValidator });
-            var result = parser.Interpret(input);
-            valueValidator.Received().IsValid(input);
+            var parser = new DecimalToRomanInterpreter();
+            var result = await parser.Interpret(input);
             //Assert
-            Assert.That(result, Is.EqualTo("3999"));
+            Assert.That(result, Is.EqualTo("MMMCMXCIX"));
         }
 
 
         [Test]
-        public void RomanInputFourtyEightTest()
+        public async Task RomanInputFourtyEightTest()
         {
             //Arrange
             var valueValidator = Substitute.For<IValueValidator>();
-            var input = "XLVIII";
+            var input = "48";
             valueValidator.IsValid(input).Returns(true);
 
             // Act 
-            var parser = new RomanExpressionParser(new List<IValueValidator>() { valueValidator });
-            var result = parser.Interpret(input);
-            valueValidator.Received().IsValid(input);
+            var parser = new DecimalToRomanInterpreter();
+            var result = await parser.Interpret(input);
             //Assert
-            Assert.That(result, Is.EqualTo("48"));
+            Assert.That(result, Is.EqualTo("XLVIII"));
         }
 
             [Test]
-        public void RomanSevenTwoSixTest()
+        public async Task RomanSevenTwoSixTest()
         {
             //Arrange
             var valueValidator = Substitute.For<IValueValidator>();
-            var input = "DCCXXVI";
+            var input = "726";
             valueValidator.IsValid(input).Returns(true);
 
             // Act 
-            var parser = new RomanExpressionParser(new List<IValueValidator>() { valueValidator });
-            var result = parser.Interpret(input);
-            valueValidator.Received().IsValid(input);
+            var parser = new DecimalToRomanInterpreter();
+
+            var result = await parser.Interpret(input);
 
             //Assert
-            Assert.That(result, Is.EqualTo("726"));
+            Assert.That(result, Is.EqualTo("DCCXXVI"));
         }
     }
 }
